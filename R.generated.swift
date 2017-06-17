@@ -41,8 +41,11 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 0 reuse identifiers.
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 1 reuse identifiers.
   struct reuseIdentifier {
+    /// Reuse identifier `IndexCell`.
+    static let indexCell: Rswift.ReuseIdentifier<UIKit.UITableViewCell> = Rswift.ReuseIdentifier(identifier: "IndexCell")
+    
     fileprivate init() {}
   }
   
@@ -78,7 +81,7 @@ struct R: Rswift.Validatable {
   
   fileprivate struct intern: Rswift.Validatable {
     fileprivate static func validate() throws {
-      // There are no resources to validate
+      try _R.validate()
     }
     
     fileprivate init() {}
@@ -89,12 +92,20 @@ struct R: Rswift.Validatable {
   fileprivate init() {}
 }
 
-struct _R {
+struct _R: Rswift.Validatable {
+  static func validate() throws {
+    try storyboard.validate()
+  }
+  
   struct nib {
     fileprivate init() {}
   }
   
-  struct storyboard {
+  struct storyboard: Rswift.Validatable {
+    static func validate() throws {
+      try main.validate()
+    }
+    
     struct launchScreen: Rswift.StoryboardResourceWithInitialControllerType {
       typealias InitialController = UIKit.UIViewController
       
@@ -104,11 +115,20 @@ struct _R {
       fileprivate init() {}
     }
     
-    struct main: Rswift.StoryboardResourceWithInitialControllerType {
+    struct main: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UINavigationController
       
       let bundle = R.hostingBundle
+      let indexViewController = StoryboardViewControllerResource<IndexViewController>(identifier: "IndexViewController")
       let name = "Main"
+      
+      func indexViewController(_: Void = ()) -> IndexViewController? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: indexViewController)
+      }
+      
+      static func validate() throws {
+        if _R.storyboard.main().indexViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'indexViewController' could not be loaded from storyboard 'Main' as 'IndexViewController'.") }
+      }
       
       fileprivate init() {}
     }
