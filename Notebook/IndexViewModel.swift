@@ -10,17 +10,18 @@ import Foundation
 import RxCocoa
 import RxSwift
 
+
 class IndexViewModel {
  
-    //If I were spending a bit more time on this, I would probably use RxDataSource, and have this be a driver that's exposed to the view controller, backed by a BehaviorSubject.
+    //If I were spending a bit more time on this, I might use RxDataSource, and have this be a driver that's exposed to the view controller, backed by a BehaviorSubject.
     
     let notes = Variable<[NoteDraft]>([])
+    private let noteInteractor: NoteInteractor
     
-    init() {
+    init(noteInteractor: NoteInteractor) {
         
-        let firstNote = NoteDraft(title: "first note", date: Date(), author: "Pamela")
-        notes.value = [firstNote]
-        
+        self.noteInteractor = noteInteractor
+
     }
     
     func note(for indexPath: IndexPath) -> NoteDraft? {

@@ -7,24 +7,35 @@
 //
 
 import UIKit
+import CoreData
+
 
 class AppCoordinator {
     
     private let navigationController: UINavigationController
+    
+    private let persistentContainer: NSPersistentContainer
     
     init(navigationController: UINavigationController) {
         
         self.navigationController = navigationController
         self.navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         
+        let store = NSPersistentContainer(name: "Notebook")
+        self.persistentContainer = store
+        
         guard let indexViewController = R.storyboard.main.indexViewController() else {
             assertionFailure("can't create index view controller")
             return
         }
         
-        let indexViewModel = IndexViewModel()
+        let noteInteractor = NoteInteractor(container: self.persistentContainer)
+        let indexViewModel = IndexViewModel(noteInteractor: noteInteractor)
         indexViewController.viewModel = indexViewModel
         
         navigationController.viewControllers = [indexViewController]
     }
+    
+ 
+        
 }
