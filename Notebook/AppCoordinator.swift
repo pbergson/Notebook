@@ -16,5 +16,15 @@ class AppCoordinator {
         
         self.navigationController = navigationController
         self.navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        
+        guard let indexViewController = R.storyboard.main.indexViewController() else {
+            assertionFailure("can't create index view controller")
+            return
+        }
+        
+        let indexViewModel = IndexViewModel()
+        indexViewController.viewModel = indexViewModel
+        
+        navigationController.viewControllers = [indexViewController]
     }
 }
