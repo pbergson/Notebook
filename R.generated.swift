@@ -49,8 +49,23 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.segue` struct is generated, and contains static references to 0 view controllers.
+  /// This `R.segue` struct is generated, and contains static references to 1 view controllers.
   struct segue {
+    /// This struct is generated for `IndexViewController`, and contains static references to 1 segues.
+    struct indexViewController {
+      /// Segue identifier `NewNoteSegue`.
+      static let newNoteSegue: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, IndexViewController, NewNoteViewController> = Rswift.StoryboardSegueIdentifier(identifier: "NewNoteSegue")
+      
+      /// Optionally returns a typed version of segue `NewNoteSegue`.
+      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
+      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
+      static func newNoteSegue(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, IndexViewController, NewNoteViewController>? {
+        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.indexViewController.newNoteSegue, segue: segue)
+      }
+      
+      fileprivate init() {}
+    }
+    
     fileprivate init() {}
   }
   
@@ -121,12 +136,18 @@ struct _R: Rswift.Validatable {
       let bundle = R.hostingBundle
       let indexViewController = StoryboardViewControllerResource<IndexViewController>(identifier: "IndexViewController")
       let name = "Main"
+      let newNoteViewController = StoryboardViewControllerResource<NewNoteViewController>(identifier: "NewNoteViewController")
       
       func indexViewController(_: Void = ()) -> IndexViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: indexViewController)
       }
       
+      func newNoteViewController(_: Void = ()) -> NewNoteViewController? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: newNoteViewController)
+      }
+      
       static func validate() throws {
+        if _R.storyboard.main().newNoteViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newNoteViewController' could not be loaded from storyboard 'Main' as 'NewNoteViewController'.") }
         if _R.storyboard.main().indexViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'indexViewController' could not be loaded from storyboard 'Main' as 'IndexViewController'.") }
       }
       

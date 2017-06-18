@@ -9,12 +9,16 @@
 import UIKit
 import CoreData
 
+protocol AppNavigationDelegate: class {
+    func showAddNote()
+}
+
 
 class AppCoordinator {
     
-    private let navigationController: UINavigationController
+    fileprivate let navigationController: UINavigationController
     
-    private let persistentContainer: NSPersistentContainer
+    fileprivate let persistentContainer: NSPersistentContainer
     
     init(navigationController: UINavigationController) {
         
@@ -32,10 +36,23 @@ class AppCoordinator {
         let noteInteractor = NoteInteractor(container: self.persistentContainer)
         let indexViewModel = IndexViewModel(noteInteractor: noteInteractor)
         indexViewController.viewModel = indexViewModel
+        indexViewController.appNavigationDelegate = self
         
         navigationController.viewControllers = [indexViewController]
     }
+}
+
+extension AppCoordinator: AppNavigationDelegate {
     
- 
+    func showAddNote() {
+        guard let newNoteViewController = R.storyboard.main.newNoteViewController() else {
+            assertionFailure("can't create new note view controller")
+            return
+        }
         
+        let noteInteractor = NoteInteractor(container: persistentContainer)
+        let newNoteViewModel = NewNoteViewModel(noteInteractor: noteInteractor)
+        newNoteViewController.viewModel = newNoteViewModel
+        navigationController.present(newNoteViewController, animated: true, completion: nil)
+    }
 }

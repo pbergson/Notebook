@@ -34,6 +34,13 @@ class NoteInteractorTests: XCTestCase {
         .subscribe(onNext: { (notes) in
             expectation.fulfill()
             XCTAssert(notes.count == 2, "wrong number of notes")
+            
+            let one = notes[0]
+            XCTAssert(one.title == "foo", "expected foo")
+            
+            let two = notes[1]
+            XCTAssert(two.title == "bar", "expected bar")
+            
         }, onError: { (error) in
             XCTFail("failed with error: \(error)")
         })
