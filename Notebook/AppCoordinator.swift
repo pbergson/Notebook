@@ -45,6 +45,8 @@ class AppCoordinator {
         
         StyleHelper.applyStyle(to: navigationController)
         navigationController.viewControllers = [indexViewController]
+        
+        noteInteractor.uploadIfNeeded()
     }
     
     

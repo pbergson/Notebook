@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class IndexViewController: UIViewController {
 
@@ -14,13 +15,36 @@ class IndexViewController: UIViewController {
     
     weak var appNavigationDelegate: AppNavigationDelegate?
     
-    var viewModel: IndexViewModel!
+    private var disposeBag = DisposeBag()
+    
+    var viewModel: IndexViewModel? {
+        didSet {
+            bindIfReady(viewModel: viewModel)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bindIfReady(viewModel: viewModel)
+        
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+    }
+    
+    func bindIfReady(viewModel: IndexViewModel?) {
+        
+        guard let viewModel = viewModel, isViewLoaded else {
+            return
+        }
+
+        viewModel.notes.asObservable()
+            .subscribe(onNext: { [tableView] _ in
+                tableView?.reloadData()
+            })
+            .disposed(by: disposeBag)
+    
     }
     
     @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
@@ -39,12 +63,12 @@ class IndexViewController: UIViewController {
 extension IndexViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.notes.value.count
+        return viewModel!.notes.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.indexCell),
-            let note = viewModel.note(for: indexPath) else {
+            let note = viewModel!.note(for: indexPath) else {
             assertionFailure("can't dequeue indexCell")
             return UITableViewCell()
         }
@@ -59,7 +83,7 @@ extension IndexViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.showNote(at: indexPath)
+        viewModel!.showNote(at: indexPath)
     }
 }
 

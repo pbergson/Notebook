@@ -20,6 +20,10 @@ class NoteDetailViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBAction func doneTapped(_ sender: Any) {
+        
+        dismiss(animated: true, completion: nil)
+    }
     var viewModel: IndexViewModel? {
         didSet {
             bindIfReady(viewModel: viewModel)

@@ -24,7 +24,6 @@
 		182D98AA1EFD63C30050E85B /* LocationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D98A91EFD63C30050E85B /* LocationInteractor.swift */; };
 		182D98AC1EFD671C0050E85B /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D98AB1EFD671C0050E85B /* CLLocationManager+Rx.swift */; };
 		182D98AE1EFD67530050E85B /* CLLocationDelegate+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D98AD1EFD67530050E85B /* CLLocationDelegate+Rx.swift */; };
-		182D98B11EFD92190050E85B /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D98B01EFD92190050E85B /* ReachabilityService.swift */; };
 		182D98BA1EFD97B40050E85B /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D98B91EFD97B40050E85B /* NoteDetailViewController.swift */; };
 		182D98BC1EFD9C140050E85B /* NoteDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D98BB1EFD9C140050E85B /* NoteDetail.swift */; };
 		184E9E041EF9EC8A00F3C1E2 /* StyleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184E9E031EF9EC8A00F3C1E2 /* StyleHelper.swift */; };
@@ -65,7 +64,6 @@
 		182D98A91EFD63C30050E85B /* LocationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInteractor.swift; sourceTree = "<group>"; };
 		182D98AB1EFD671C0050E85B /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		182D98AD1EFD67530050E85B /* CLLocationDelegate+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationDelegate+Rx.swift"; sourceTree = "<group>"; };
-		182D98B01EFD92190050E85B /* ReachabilityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		182D98B91EFD97B40050E85B /* NoteDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
 		182D98BB1EFD9C140050E85B /* NoteDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteDetail.swift; sourceTree = "<group>"; };
 		184E9E031EF9EC8A00F3C1E2 /* StyleHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleHelper.swift; sourceTree = "<group>"; };
@@ -176,7 +174,6 @@
 		181D57AD1EF4C8CB0074B525 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				182D98AF1EFD91B90050E85B /* Networking */,
 				181D57AE1EF4C9240074B525 /* NoteDraft.swift */,
 				182D98BB1EFD9C140050E85B /* NoteDetail.swift */,
 				181D57B01EF549F60074B525 /* Notebook.xcdatamodeld */,
@@ -193,14 +190,6 @@
 				181D57BB1EF580C80074B525 /* NewNoteViewModel.swift */,
 			);
 			name = "New Note";
-			sourceTree = "<group>";
-		};
-		182D98AF1EFD91B90050E85B /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				182D98B01EFD92190050E85B /* ReachabilityService.swift */,
-			);
-			name = Networking;
 			sourceTree = "<group>";
 		};
 		182D98B81EFD97660050E85B /* NoteDetail */ = {
@@ -457,7 +446,6 @@
 				181D57BC1EF580C80074B525 /* NewNoteViewModel.swift in Sources */,
 				184E9E041EF9EC8A00F3C1E2 /* StyleHelper.swift in Sources */,
 				181D57B21EF549F60074B525 /* Notebook.xcdatamodeld in Sources */,
-				182D98B11EFD92190050E85B /* ReachabilityService.swift in Sources */,
 				181D57A81EF4C3D20074B525 /* AppCoordinator.swift in Sources */,
 				181D57841EF4BD880074B525 /* IndexViewController.swift in Sources */,
 				181D57821EF4BD880074B525 /* AppDelegate.swift in Sources */,

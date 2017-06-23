@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import CoreLocation
 
+//The intent behind this class would be to manage a Location object so that users can select from existing locations, as well as responding to taps on a geolocation button, or possibly obtaining gps data from photos.
+
 class LocationInteractor {
     
     private let locationManager = CLLocationManager()

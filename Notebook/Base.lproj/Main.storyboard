@@ -175,9 +175,10 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TR8-iH-mdd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="t4W-Fa-zgm">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="t4W-Fa-zgm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -212,7 +213,7 @@
             </objects>
             <point key="canvasLocation" x="1678" y="789"/>
         </scene>
-        <!--Title-->
+        <!--Note Detail View Controller-->
         <scene sceneID="PO7-t8-983">
             <objects>
                 <viewController id="Fdq-q0-pzQ" customClass="NoteDetailViewController" customModule="Notebook" customModuleProvider="target" sceneMemberID="viewController">
@@ -276,8 +277,8 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Title" id="hyn-ps-UT4">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="P13-Ih-9Ks">
+                    <navigationItem key="navigationItem" id="hyn-ps-UT4">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="5Ey-pP-vs5">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>

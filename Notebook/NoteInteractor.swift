@@ -31,6 +31,7 @@ class NoteInteractor: NSObject, NSFetchedResultsControllerDelegate {
         super.init()
         
         do {
+            fetchedResultsController.delegate = self
             try fetchedResultsController.performFetch()
             if let results = fetchedResultsController.fetchedObjects {
                 _notes.onNext(results)
@@ -43,7 +44,7 @@ class NoteInteractor: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     func createNote(with noteDraft: NoteDraft) {
-        let context = persistentContainer.newBackgroundContext()
+        let context = persistentContainer.viewContext
         
         context.perform { 
             let note = Note(context: context)
@@ -59,10 +60,15 @@ class NoteInteractor: NSObject, NSFetchedResultsControllerDelegate {
         }
     }
     
+    func uploadIfNeeded() {
+        //unimplemented due to time constraints, but here I'd fetch the notes without uploadedAt dates, serialize, and upload using URLSession. 
+    }
+    
     //MARK: FetchedResultsControllerDelegate
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        if let results = fetchedResultsController.fetchedObjects {
+        
+        if let results = controller.fetchedObjects as? [Note] {
             _notes.onNext(results)
         }
     }

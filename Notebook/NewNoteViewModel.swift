@@ -17,32 +17,18 @@ class NewNoteViewModel {
     let geolocateTaps: AnyObserver<Void>
     
     private let noteInteractor: NoteInteractor
+    private let locationInteractor: LocationInteractor
     private var disposeBag = DisposeBag()
     
     init(noteInteractor: NoteInteractor) {
         self.noteInteractor = noteInteractor
+        self.locationInteractor = LocationInteractor()
         
         let _titleText = BehaviorSubject<String?>(value: nil)
         titleText = _titleText.asObserver()
         
-        _titleText.asObservable()
-            .subscribe(onNext: { (text) in
-                if let text = text {
-                    print(text)
-                }
-            })
-            .disposed(by: disposeBag)
-        
         let _bodyText = BehaviorSubject<String?>(value: nil)
         bodyText = _bodyText.asObserver()
-        
-        _bodyText.asObservable()
-            .subscribe(onNext: { (text) in
-                if let text = text {
-                    print(text)
-                }
-            })
-            .disposed(by: disposeBag)
         
         let _saveTaps = PublishSubject<Void>()
         
@@ -62,6 +48,19 @@ class NewNoteViewModel {
         let _geolocateTaps = PublishSubject<Void>()
         geolocateTaps = _geolocateTaps.asObserver()
         
+        _geolocateTaps.asObservable()
+            .flatMap { [locationInteractor] _ in
+                return locationInteractor.getLocation()
+            }
+            .subscribe(onNext: { (location) in
+                //I invision using the returned location to populate the UI, but probably not as a placemark - I'd implement a Location type like the Note type.
+                
+                print(location)
+            }, onError: { (error) in
+                //this is where I should prompt for permissions and navigate to settings as necessary
+                print(error)
+            })
+            .disposed(by: disposeBag)
     }
     
 
