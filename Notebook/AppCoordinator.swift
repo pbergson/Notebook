@@ -23,10 +23,15 @@ class AppCoordinator {
     init(navigationController: UINavigationController) {
         
         self.navigationController = navigationController
-        self.navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         
         let store = NSPersistentContainer(name: "Notebook")
         self.persistentContainer = store
+
+        persistentContainer.loadPersistentStores { (_, error) in
+            if error != nil {
+                assertionFailure("couldn't load persistent store")
+            }
+        }
         
         guard let indexViewController = R.storyboard.main.indexViewController() else {
             assertionFailure("can't create index view controller")
@@ -38,14 +43,19 @@ class AppCoordinator {
         indexViewController.viewModel = indexViewModel
         indexViewController.appNavigationDelegate = self
         
+        StyleHelper.applyStyle(to: navigationController)
         navigationController.viewControllers = [indexViewController]
     }
+    
+    
 }
 
 extension AppCoordinator: AppNavigationDelegate {
     
     func showAddNote() {
-        guard let newNoteViewController = R.storyboard.main.newNoteViewController() else {
+        
+        guard let newNoteNavController = R.storyboard.main.newNoteNavController(),
+        let newNoteViewController = R.storyboard.main.newNoteViewController() else {
             assertionFailure("can't create new note view controller")
             return
         }
@@ -53,6 +63,9 @@ extension AppCoordinator: AppNavigationDelegate {
         let noteInteractor = NoteInteractor(container: persistentContainer)
         let newNoteViewModel = NewNoteViewModel(noteInteractor: noteInteractor)
         newNoteViewController.viewModel = newNoteViewModel
-        navigationController.present(newNoteViewController, animated: true, completion: nil)
+        newNoteNavController.viewControllers = [newNoteViewController]
+        
+        StyleHelper.applyStyle(to: newNoteNavController)
+        navigationController.present(newNoteNavController, animated: true, completion: nil)
     }
 }

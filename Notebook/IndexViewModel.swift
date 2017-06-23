@@ -15,16 +15,37 @@ class IndexViewModel {
  
     //If I were spending a bit more time on this, I might use RxDataSource, and have this be a driver that's exposed to the view controller, backed by a BehaviorSubject.
     
-    let notes = Variable<[NoteDraft]>([])
+    let notes = Variable<[Note]>([])
+    
+    var noteDetail: NoteDetail? = nil
+
+    private let dateFormatter = DateFormatter()
+    
     private let noteInteractor: NoteInteractor
+    
+    private var disposeBag = DisposeBag()
     
     init(noteInteractor: NoteInteractor) {
         
         self.noteInteractor = noteInteractor
+        noteInteractor.currentNotes
+            .bind(to: notes)
+            .disposed(by: disposeBag)
 
     }
     
-    func note(for indexPath: IndexPath) -> NoteDraft? {
+    func showNote(at indexPath: IndexPath) {
+        
+        guard let note = note(for: indexPath) else {
+            return
+        }
+        
+        let detail = NoteDetail(note: note, formatter: dateFormatter)
+        noteDetail = detail
+
+    }
+    
+    func note(for indexPath: IndexPath) -> Note? {
         let currentNotes = notes.value
         
         if currentNotes.count > indexPath.row {

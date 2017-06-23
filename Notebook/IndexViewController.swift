@@ -27,6 +27,13 @@ class IndexViewController: UIViewController {
         
         appNavigationDelegate?.showAddNote()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == R.segue.indexViewController.showDetailSegue.identifier,
+            let viewController = segue.destination as? NoteDetailViewController {
+            viewController.viewModel = viewModel
+        }
+    }
 }
 
 extension IndexViewController: UITableViewDataSource {
@@ -43,7 +50,7 @@ extension IndexViewController: UITableViewDataSource {
         }
         
         cell.textLabel?.text = note.title
-        cell.detailTextLabel?.text = note.author
+        cell.detailTextLabel?.text = note.body
         return cell
     }
 }
@@ -52,6 +59,7 @@ extension IndexViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.showNote(at: indexPath)
     }
 }
 

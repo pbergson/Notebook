@@ -10,6 +10,7 @@ target 'Notebook' do
     pod 'RxSwift',    '~> 3.0'
     pod 'RxCocoa',    '~> 3.0'
     pod 'R.swift'
+    pod 'ReachabilitySwift'
 
   target 'NotebookTests' do
     inherit! :search_paths

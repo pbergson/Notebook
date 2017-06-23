@@ -42,6 +42,25 @@ class NoteInteractor: NSObject, NSFetchedResultsControllerDelegate {
         self.fetchedResultsController.delegate = self
     }
     
+    func createNote(with noteDraft: NoteDraft) {
+        let context = persistentContainer.newBackgroundContext()
+        
+        context.perform { 
+            let note = Note(context: context)
+            note.title = noteDraft.title
+            note.body = noteDraft.body
+            note.createdAt = noteDraft.date as NSDate
+            
+            do {
+                try context.save()
+            } catch {
+                assertionFailure("couldn't save context")
+            }
+        }
+    }
+    
+    //MARK: FetchedResultsControllerDelegate
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         if let results = fetchedResultsController.fetchedObjects {
             _notes.onNext(results)

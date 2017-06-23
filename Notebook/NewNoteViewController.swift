@@ -13,8 +13,6 @@ class NewNoteViewController: UIViewController {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var bodyTextField: UITextField!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     
     private var disposeBag = DisposeBag()
     
@@ -28,6 +26,23 @@ class NewNoteViewController: UIViewController {
         super.viewDidLoad()
         
         bindIfReady(viewModel: viewModel)
+    }
+    
+    @IBAction func cancelTapped(_ sender: Any) {
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
+        viewModel?.saveTaps.onNext(())
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func getLocationTapped(_ sender: Any) {
+        viewModel?.geolocateTaps.onNext(())
+    }
+    
+    @IBAction func addPhotoTapped(_ sender: Any) {
+        
     }
     
     func bindIfReady(viewModel: NewNoteViewModel?) {
@@ -44,5 +59,7 @@ class NewNoteViewController: UIViewController {
         bodyTextField.rx.text
             .bind(to: viewModel.bodyText)
             .disposed(by: disposeBag)
+        
+        
     }
 }
